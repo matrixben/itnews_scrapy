@@ -72,7 +72,6 @@ class PostgresPipeline:
         return item
 
     def select_news(self, item):
-        print(item['title'])
         select_news_sql = "select title from news where title = %s"
         self.cur.execute(select_news_sql, (item['title'],))
         exist_title = self.cur.fetchone()
