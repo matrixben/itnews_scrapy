@@ -9,7 +9,7 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'itnewsSpider'
+BOT_NAME = 'itnews'
 
 SPIDER_MODULES = ['itnewsSpider.spiders']
 NEWSPIDER_MODULE = 'itnewsSpider.spiders'
@@ -68,6 +68,7 @@ DEFAULT_REQUEST_HEADERS = {
 ITEM_PIPELINES = {
     'itnewsSpider.pipelines.DuplicatesPipeline': 300,
     'itnewsSpider.pipelines.ItnewsspiderPipeline': 400,
+    'itnewsSpider.pipelines.PostgresPipeline': 500,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,3 +91,12 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 将密码保存在其他文件, TODO: 部署到服务器时要创建此文件
+with open('/etc/secret_key_scrapy.txt') as f:
+    POSTGRESQL_PWD = f.read().strip()
+# PostgreSQL settings
+POSTGRESQL_HOST = 'localhost'
+POSTGRESQL_DB = 'sampledb'
+POSTGRESQL_USER = 'postgres'
+POSTGRESQL_PORT = 12345
